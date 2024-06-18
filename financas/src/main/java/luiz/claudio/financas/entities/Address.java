@@ -6,17 +6,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data // Generate getters and setters
 @NoArgsConstructor //Generate constructor without parameters
-@Entity(name = "address")
+@Document("address")
 public class Address {
 
     @Id//Seta no banco de dados que isto é um ID
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Define a estrategia de geração dp id
-    private Long id;
+    private String id;
     private String city;
     private String street;
-    private  String number;
+    private String number;
     private String complement;
 }

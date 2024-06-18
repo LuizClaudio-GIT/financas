@@ -7,15 +7,15 @@ import jakarta.persistence.Id;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import luiz.claudio.financas.entities.entriesAndExits.EntriesAndExits;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data // Generate getters and setters
 @NoArgsConstructor //Generate constructor without parameters
-@Entity(name = "balance")
+@Document("balance")
 public class Balance {
 
     @Id//Seta no banco de dados que isto é um ID
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Define a estrategia de geração dp id
-    private Long id;
+    private String id;
     private double balance;
     private EntriesAndExits entriesAndExits;
 

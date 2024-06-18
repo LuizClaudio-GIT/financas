@@ -1,6 +1,6 @@
 package luiz.claudio.financas.entities.dto;
 
-public record UserDTO(Long id,
+public record UserDTO(String id,
                       String userName,
                       int age,
                       String document,
