@@ -1,9 +1,10 @@
 package luiz.claudio.financas.entities.dto;
 
 public record UserDTO(String id,
-                      String userName,
+                      String username,
                       int age,
                       String document,
-                      String email) {
+                      String email,
+                      String password) {
 
 }

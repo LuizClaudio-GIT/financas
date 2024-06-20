@@ -18,34 +18,37 @@ public class User implements Serializable { // Serializable é utilizada para pe
     @Id//Seta no banco de dados que isto é um ID
     private String id;
     @Indexed(unique = true)// Indica que a variavel n pode ser repetida pelos usuários
-    @Field("user_name")
-    private String userName;
+    private String username;
     @Indexed(unique = true)
-    @Field("age") // indica o nome que eu quero  que seja registrado no banco de dados, esta anotação é utilizada para bancos NoSQL
     private int age;
     @Indexed(unique = true)
-    @Field("document")// indica o nome que eu quero  que seja registrado no banco de dados, esta anotação é utilizada para bancos NoSQL
     private String document;
     @Indexed(unique = true)
-    @Field("email")// indica o nome que eu quero  que seja registrado no banco de dados, esta anotação é utilizada para bancos NoSQL
     private String email;
     @Indexed(unique = true)
-    @Field("password")// indica o nome que eu quero  que seja registrado no banco de dados, esta anotação é utilizada para bancos NoSQL
     private String password;
     @Indexed(unique = true)
-    @Field("data_criacao")// indica o nome que eu quero  que seja registrado no banco de dados, esta anotação é utilizada para bancos NoSQL
-    private LocalDateTime dataCriacao; // Registra a data e a hora da inserção de um usuário  no banco
+    private LocalDateTime creationDate; // Registra a data e a hora da inserção de um usuário  no banco
     @Indexed(unique = true)
-    @Field("data_modificacao")// indica o nome que eu quero  que seja registrado no banco de dados, esta anotação é utilizada para bancos NoSQL
-    private LocalDateTime dataModificacao;// Registra quando o cadastro dos usuarios sofrem um update
+    private LocalDateTime lastUpdate;// Registra quando o cadastro dos usuarios sofrem um update
 
 
-
-    public User(UserDTO data) {
+    public User(UserDTO  data) {
         this.id = data.id();
-        this.userName = data.userName();
+        this.username = data.username();
         this.age = data.age();
         this.document = data.document();
         this.email = data.email();
+        this.password = data.password();
+        this.creationDate = LocalDateTime.now().minusHours(3);
+    }
+
+    public void updateUser(UserDTO data) {
+        this.username = data.username();
+        this.age = data.age();
+        this.document = data.document();
+        this.email = data.email();
+        this.password = data.password();
+        this.lastUpdate = LocalDateTime.now().minusHours(3);
     }
 }
