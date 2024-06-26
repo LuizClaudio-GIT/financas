@@ -54,6 +54,17 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PutMapping("/update-user-balance")
+    public ResponseEntity<?> updateUserBalance(@RequestParam String id, @RequestParam double value, @RequestParam boolean sum) {
+        try {
+            return new ResponseEntity<>(service.updateUserBalance(id, value, sum), HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
 }
 
 

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import luiz.claudio.financas.entities.dto.UserDTO;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -31,9 +32,11 @@ public class User implements Serializable { // Serializable é utilizada para pe
     private LocalDateTime creationDate; // Registra a data e a hora da inserção de um usuário  no banco
     @Indexed(unique = true)
     private LocalDateTime lastUpdate;// Registra quando o cadastro dos usuarios sofrem um update
+    @DBRef
+    private Address address;
+    private double balance;
 
-
-    public User(UserDTO  data) {
+    public User(UserDTO data) {
         this.id = data.id();
         this.username = data.username();
         this.age = data.age();
@@ -41,6 +44,8 @@ public class User implements Serializable { // Serializable é utilizada para pe
         this.email = data.email();
         this.password = data.password();
         this.creationDate = LocalDateTime.now().minusHours(3);
+        this.address = data.address();
+        this.balance = data.balance();
     }
 
     public void updateUser(UserDTO data) {
@@ -50,5 +55,14 @@ public class User implements Serializable { // Serializable é utilizada para pe
         this.email = data.email();
         this.password = data.password();
         this.lastUpdate = LocalDateTime.now().minusHours(3);
+        this.address = data.address();
     }
+
+    public void updateUserBalance(double value, boolean sum) {
+        if (sum) {
+            this.balance += value;
+        } else {
+            this.balance -= value;
+        }
+   }
 }

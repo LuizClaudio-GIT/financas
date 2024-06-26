@@ -14,10 +14,13 @@ public class UserService {
 
     @Autowired//
     private UserRepository repository;
+    @Autowired
+    private AddressService addressService;
 
     public User create(UserDTO data) {
         User newUser = new User(data);
         validate(newUser);
+        addressService.save(newUser.getAddress());
         repository.save(newUser);
         return newUser;
     }
@@ -50,6 +53,15 @@ public class UserService {
 
     public List<User> get(){
         return repository.findAll();
+    }
+
+    public User updateUserBalance(String id, double value, boolean sum){
+        User existingUser = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado com o ID: "));
+        existingUser.updateUserBalance(value, sum);
+        repository.save(existingUser);
+        return existingUser;
+
     }
 
 
