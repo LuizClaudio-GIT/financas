@@ -2,6 +2,7 @@ package luiz.claudio.financas.controller;
 
 import luiz.claudio.financas.entities.User;
 import luiz.claudio.financas.entities.dto.UserDTO;
+import luiz.claudio.financas.entities.expenses.Expenses;
 import luiz.claudio.financas.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,9 +57,9 @@ public class UserController {
     }
 
     @PutMapping("/update-user-balance")
-    public ResponseEntity<?> updateUserBalance(@RequestParam String id, @RequestParam double value, @RequestParam boolean sum) {
+    public ResponseEntity<?> updateUserBalance(@RequestParam String id, @RequestParam Expenses expenses, @RequestParam boolean sum) {
         try {
-            return new ResponseEntity<>(service.updateUserBalance(id, value, sum), HttpStatus.OK);
+            return new ResponseEntity<>(service.updateUserBalance(id, new Expenses(), sum), HttpStatus.OK);
         }catch (Exception e) {
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
