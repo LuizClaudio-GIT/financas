@@ -43,15 +43,19 @@ public class Family {
         this.entries = data.entries();
     }
 
-    public  void balanceFamily(double value){
-        balance += value;
+    public void addBalanceUser(List<User> users) {
+        if (users != null && !users.isEmpty()) {
+            double totalBalance = users.stream()
+                    .mapToDouble(User::getBalance)
+                    .sum();
+            addBalanceFamily(totalBalance);
+        }
     }
 
-    //public void addBalanceUser( List<User> users){
-      //  double totalBalance = users.stream()
-        //        .mapToDouble(User::getBalance)
-          //      .sum();
-      // addBalanceUser(balanceFamily(););
-    //}
+
+    private void addBalanceFamily(double totalBalance) {
+        System.out.println("Saldo total adicionado à família: " + totalBalance);
+    }
+
 
 }
