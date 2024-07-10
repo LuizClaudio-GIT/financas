@@ -2,6 +2,7 @@ package luiz.claudio.financas.services;
 
 import luiz.claudio.financas.entities.User;
 import luiz.claudio.financas.entities.dto.UserDTO;
+import luiz.claudio.financas.entities.expenses.Entries;
 import luiz.claudio.financas.entities.expenses.Expenses;
 import luiz.claudio.financas.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,10 +57,18 @@ public class UserService {
         return repository.findAll();
     }
 
-    public User updateUserBalance(String id, Expenses expenses, boolean sum){
+    public User updateUserBalanceSaida(String id, Expenses expenses){
         User existingUser = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado com o ID: "));
-        existingUser.updateUserBalance(expenses, sum);
+        existingUser.updateUserBalance(expenses);
+        repository.save(existingUser);
+        return existingUser;
+
+    }
+    public User updateUserBalanceEntrada(String id, Entries entries){
+        User existingUser = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado com o ID: "));
+        existingUser.updateUserBalance(entries);
         repository.save(existingUser);
         return existingUser;
 

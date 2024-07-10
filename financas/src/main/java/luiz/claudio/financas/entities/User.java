@@ -3,6 +3,7 @@ package luiz.claudio.financas.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import luiz.claudio.financas.entities.dto.UserDTO;
+import luiz.claudio.financas.entities.expenses.Entries;
 import luiz.claudio.financas.entities.expenses.Expenses;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -36,13 +37,16 @@ public class User implements Serializable { // Serializable é utilizada para pe
     @DBRef
     private Address address;
     private double balance;
+    @DBRef
+    private Expenses expenses;
+    @DBRef
+    private Entries entries;
 
     public User(UserDTO data) {
         this.id = data.id();
         this.username = data.username();
         this.age = data.age();
-        this.document = data.document();
-        this.email = data.email();
+        this.document = data.document();        this.email = data.email();
         this.password = data.password();
         this.creationDate = LocalDateTime.now().minusHours(3);
         this.address = data.address();
@@ -59,9 +63,12 @@ public class User implements Serializable { // Serializable é utilizada para pe
         this.address = data.address();
     }
 
-    public void updateUserBalance(Expenses expenses, boolean sum) {
-        if (sum) {
-            this.balance = balance + expenses.getAmount();
-        }
-   }
+    public void updateUserBalance(Expenses expenses) {
+
+        this.balance = balance + expenses.getAmount();
+    }
+
+    public void updateUserBalance(Entries entries) {
+        this.balance = balance + entries.getAmount();
+    }
 }

@@ -2,6 +2,7 @@ package luiz.claudio.financas.controller;
 
 import luiz.claudio.financas.entities.User;
 import luiz.claudio.financas.entities.dto.UserDTO;
+import luiz.claudio.financas.entities.expenses.Entries;
 import luiz.claudio.financas.entities.expenses.Expenses;
 import luiz.claudio.financas.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,17 +57,30 @@ public class UserController {
         }
     }
 
-    @PutMapping("/update-user-balance")
-    public ResponseEntity<?> updateUserBalance(@RequestParam String id, @RequestParam Expenses expenses, @RequestParam boolean sum) {
+    @PutMapping("/update-user-entry")
+    public ResponseEntity<?> updateUserBalance(@RequestParam String id, @RequestBody Entries entries) {
         try {
-            return new ResponseEntity<>(service.updateUserBalance(id, new Expenses(), sum), HttpStatus.OK);
-        }catch (Exception e) {
+
+            return new ResponseEntity<>(service.updateUserBalanceEntrada(id, entries), HttpStatus.OK);
+
+        } catch (Exception e) {
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    @PutMapping("/update-user-expense")
+    public ResponseEntity<?> updateUserBalance(@RequestParam String id, @RequestBody Expenses expenses) {
+        try {
 
+            return new ResponseEntity<>(service.updateUserBalanceSaida(id, expenses), HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
+
+
 
 
 
